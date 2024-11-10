@@ -1,3 +1,16 @@
+/*
+ * IntelliCart Project by Khushi Gajjar
+ * Project Overview:
+ * IntelliCart is a smart shopping cart system designed to transform the shopping experience by automating the checkout process and minimizing queue times.
+ * Using an RFID card, customers can start a shopping session with just a tap. 
+ * As they add items to the cart, IntelliCart utilizes an integrated camera to detect and recognize products visually, 
+ * which are then displayed on the mobile app in real time. 
+ * This app also provides a live view of the cart contents, allowing customers to keep track of selected items, 
+ * view product details, and manage their shopping list seamlessly. 
+ * At checkout, the cart automatically calculates the total, making the payment process smooth and efficient.
+ */
+
+
 #include <WiFi.h>
 #include <Adafruit_SSD1306.h>
 #include <SPI.h>
@@ -33,7 +46,7 @@ int itemNumber = 1; // Start item number from 1
 // Map of items and their prices
 std::map<String, int> priceList = {
     {"lotion", 110}, {"necklace", 500}, {"chain", 500}, {"mouse", 300},
-    {"envelope", 5}, {"lipstick",200},{"lip rouge", 200}, {"ballpen", 20}, {"tennis ball", 50},
+    {"envelope", 5}, {"lipstick", 200}, {"lip rouge", 200}, {"ballpen", 20}, {"tennis ball", 50},
     {"Band Aid", 2}, {"safety pin", 5}
 };
 
@@ -43,7 +56,7 @@ std::map<String, int> shoppingCart;
 // Function declarations
 void handleClient();
 void updateQuantityAndValueInHTML(String itemName, int quantity, int price);
-void blinkGreenLED(); // Ensure this is declared before use
+void blinkGreenLED();
 
 void setup() {
     Serial.begin(115200);
@@ -110,19 +123,17 @@ void loop() {
 
         if (itemName.length() > 0 && priceList.find(itemName) != priceList.end()) {
             int price = priceList[itemName];
-             int value = 0;
+            int value = 0;
 
             // Check if item is already in the shopping cart
             if (shoppingCart.find(itemName) == shoppingCart.end()) {
-              value=price;
+                value = price;
                 // New item
                 shoppingCart[itemName] = 1; // Initialize quantity
                 itemListHTML += "<tr id='" + itemName + "'><td id='iid'>" + String(itemNumber++) + "</td><td id='" + itemName + "'>" + itemName + "</td><td id='qty'>1</td><td id='prc'>" + String(price) + "</td><td id='tpr'>" + String(value) + "</td></tr>";
-            // itemListHTML += "<tr id='" + itemName + "'><td>" + String(itemNumber++) + "</td><td id='" + itemName + "'>" + itemName + "</td><td>1</td><td>" + String(price) + "</td><td id='tpr'>" + String(price) + "</td></tr>";
-
             } else {
                 // Existing item, update quantity and value
-                 shoppingCart[itemName] += 1; // Increment quantity
+                shoppingCart[itemName] += 1; // Increment quantity
                 updateQuantityAndValueInHTML(itemName, shoppingCart[itemName], price); // Update HTML
             }
 
@@ -140,22 +151,17 @@ void loop() {
 void updateQuantityAndValueInHTML(String itemName, int quantity, int price) {
     int startPos = itemListHTML.indexOf("<td id='" + itemName + "'>");
     if (startPos != -1) {
-        // Move to the <td> which contains the quantity
-       
-
         int quantityPos = itemListHTML.indexOf("<td id='qty'>", startPos + itemName.length() + 5);
         if (quantityPos != -1) {
             int endPos = itemListHTML.indexOf("</td>", quantityPos);
-            String quantityStr = "<td id='qty'>"+String(quantity);
+            String quantityStr = "<td id='qty'>" + String(quantity);
             itemListHTML.replace(itemListHTML.substring(quantityPos, endPos), quantityStr); // Update quantity
-            
-       
-            // Update the value in the last column
+
             int totalValue = price * quantity; // Calculate new total price for this item
             int valuePos = itemListHTML.indexOf("<td id='tpr'>", endPos);
             if (valuePos != -1) {
                 int valueEndPos = itemListHTML.indexOf("</td>", valuePos);
-                itemListHTML.replace(itemListHTML.substring(valuePos , valueEndPos), "<td id='tpr'>"+String(totalValue)); // Update value
+                itemListHTML.replace(itemListHTML.substring(valuePos, valueEndPos), "<td id='tpr'>" + String(totalValue)); // Update value
             }
         }
     }
