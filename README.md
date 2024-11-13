@@ -13,3 +13,6 @@ RFID Scanning: Quick initiation of a shopping session.
 Camera-Based Product Recognition: Detects items and updates the cart in real time.
 Real-Time Mobile App Integration: View and manage cart contents with product images.
 Automated Checkout: Ensures a smooth, hassle-free payment experience.
+
+You can check it in my youtube video about live video demonstration of code..
+[![Intellicart(https://img.youtube.com/vi/vTrkLJbVTrU&t=71s/0.jpg)](https://www.youtube.com/watch?v=vTrkLJbVTrU&t=71s)
