@@ -1,5 +1,7 @@
 IntelliCart – Intelligent Shopping Cart System
 
+![image alt](https://github.com/Khushi4502/Intellicart/blob/b9b3144c4a03ea066273985e7dd9ac72f90a059d/PROJECT.jpeg)
+
 IntelliCart is a smart shopping cart system designed to transform the shopping experience by automating the checkout process and minimizing queue times. Using an RFID card, customers can start a shopping session with just a tap. As they add items to the cart, IntelliCart utilizes an integrated camera to detect and recognize products visually, which are then displayed on the mobile app in real-time. This app also provides a live view of the cart contents, allowing customers to keep track of selected items, view product details, and manage their shopping list seamlessly. At checkout, the cart automatically calculates the total, making the payment process smooth and efficient.
 
 Key Features:
